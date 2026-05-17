@@ -15,11 +15,30 @@ public class MobileWikipediaTests extends TestBase {
                 .verifySearchResultsAreDisplayed();
     }
 
-    @DisplayName("Вызов голосового поиска")
+    @DisplayName("Добавление языка поиска")
     @Test
-    void successfulVoiceSearchTest() {
+    void successfulAddLanguageTest() {
         searchScreenPage.skipStartScreen()
-                .voiceSearchInput()
-                .displayPopAp();
+                .searchInput()
+                .tapLangSearchButton()
+                .tapAddLanguage()
+                .tapLanguageElement()
+                .verifyLanguageDisplayed();
+    }
+
+    @DisplayName("Удаление языка")
+    @Test
+    void successfulDeletionLanguageTest() {
+        searchScreenPage.skipStartScreen()
+                .searchInput()
+                .tapLangSearchButton()
+                .tapAddLanguage()
+                .tapLanguageElement()
+                .tapKebabMenu()
+                .removeLanguage()
+                .languageCheckbox()
+                .deleteSelectedItems()
+                .deleteOk()
+                .verifyOneResult();
     }
 }
