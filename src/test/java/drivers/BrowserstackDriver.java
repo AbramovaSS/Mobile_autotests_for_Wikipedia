@@ -16,15 +16,15 @@ public class BrowserstackDriver implements WebDriverProvider {
     public WebDriver createDriver(@Nonnull Capabilities capabilities) {
         MutableCapabilities caps = new MutableCapabilities();
 
-        caps.setCapability("browserstack.user", "Abramova Svetlana");
-        caps.setCapability("browserstack.key", "yurewec1225");
+        caps.setCapability("browserstack.user", "abramovasvetlana_jd54R2");
+        caps.setCapability("browserstack.key", "RZs2UT53pWYVqWNgsWf2");
 
-        caps.setCapability("app", "bs://c700ce60cf13ae8ed97705a55b8e022f13c5827c");
+        caps.setCapability("app", "bs://sample.app");
 
-        caps.setCapability("device", "Google Pixel 3");
-        caps.setCapability("os_version", "9.0");
+        caps.setCapability("device", "Google Pixel 9");
+        caps.setCapability("os_version", "15.0");
 
-        caps.setCapability("project", "First Java Project");
+        caps.setCapability("project", "BrowserStack Sample");
         caps.setCapability("build", "browserstack-build-1");
         caps.setCapability("name", "first_test");
 

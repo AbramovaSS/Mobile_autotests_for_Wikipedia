@@ -5,17 +5,28 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.*;
+import static io.appium.java_client.AppiumBy.accessibilityId;
 import static io.appium.java_client.AppiumBy.id;
 
 public class SearchScreenPage {
-    private final SelenideElement searchInput = $(id("org.wikipedia.alpha:id/search_src_text")),
-            keyInput = $(id("org.wikipedia.alpha:id/search_src_text"));
+    private final SelenideElement searchInput = $(accessibilityId("Search Wikipedia")),
+            keyInput = $(id("org.wikipedia.alpha:id/search_src_text")),
+            voiceSearchInput = $(id("org.wikipedia.alpha:id/voice_search_button")),
+            popAp = $(id("com.google.android.googlequicksearchbox:id/intent_api_text"));
     private final ElementsCollection searchResults = $$(id("org.wikipedia.alpha:id/page_list_item_title"));
 
+
+    @Step("Скрыть стартовый экран")
+    public SearchScreenPage skipStartScreen() {
+        back();
+        return this;
+    }
+
     @Step("Нажать на строку поиска")
-    public SearchScreenPage setSearchInput() {
+    public SearchScreenPage searchInput() {
         searchInput.click();
         return this;
     }
@@ -30,4 +41,17 @@ public class SearchScreenPage {
     public void verifySearchResultsAreDisplayed() {
         searchResults.shouldHave(sizeGreaterThan(0));
     }
+
+    @Step("Нажать на микрофон (голосовой поиск) в строке поиска")
+    public SearchScreenPage voiceSearchInput() {
+        voiceSearchInput.click();
+        return this;
+    }
+
+    @Step("Убедиться, что открывается диалоговое окно с голосовым поиском")
+    public SearchScreenPage displayPopAp() {
+        popAp.shouldBe(visible);
+        return this;
+    }
 }
+
