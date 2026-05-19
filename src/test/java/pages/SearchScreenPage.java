@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.*;
 import static io.appium.java_client.AppiumBy.accessibilityId;
 import static io.appium.java_client.AppiumBy.id;
@@ -15,14 +16,16 @@ public class SearchScreenPage {
     private final SelenideElement searchInput = $(accessibilityId("Search Wikipedia")),
             keyInput = $(id("org.wikipedia.alpha:id/search_src_text")),
             langSearchInput = $(id("org.wikipedia.alpha:id/search_lang_button")),
-            addLanguage = $(id("org.wikipedia.alpha:id/wiki_language_title")),
-            languageElement = $x("//android.widget.TextView[@text='Русский']"),
-            russianLanguageElement = $x("//android.widget.TextView[@resource-id='org.wikipedia.alpha:id/wiki_language_title' and @text='Русский']"),
+            addLanguage = $(byXpath("//android.widget.TextView[@text='Add language']")),
+            languageElement = $(byXpath("//android.widget.TextView[@text='Русский']")),
+            russianLanguageElement = $(byXpath("//android.widget.TextView[@resource-id='org.wikipedia.alpha:id/wiki_language_title' and @text='Русский']")),
             kebabMenuButton = $(accessibilityId("More options")),
             removeLanguageButton = $(id("org.wikipedia.alpha:id/title")),
-            secondLanguageCheckbox = $x("(//android.widget.CheckBox[@resource-id='org.wikipedia.alpha:id/wiki_language_checkbox'])[2]"),
+            secondLanguageCheckbox = $(byXpath("(//android.widget.CheckBox[@resource-id='org.wikipedia.alpha:id/wiki_language_checkbox'])[2]")),
             deleteSelectedItemsButton = $(id("org.wikipedia.alpha:id/title")),
             deleteOkButton = $(id("android:id/button1"));
+
+
 
     private final ElementsCollection searchResults = $$(id("org.wikipedia.alpha:id/page_list_item_title")),
             langResult = $$(id("org.wikipedia.alpha:id/wikipedia_languages_recycler"));
@@ -69,9 +72,8 @@ public class SearchScreenPage {
     }
 
     @Step("Убедиться, что русский язык добавлен")
-    public SearchScreenPage verifyLanguageDisplayed() {
+    public void verifyLanguageDisplayed() {
         russianLanguageElement.shouldBe(visible);
-        return this;
     }
 
     @Step("Нажать на кебаб-меню на экране Wikipedia languages")
