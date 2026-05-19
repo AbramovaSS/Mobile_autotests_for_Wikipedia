@@ -9,7 +9,9 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import pages.LanguagesScreenPage;
 import pages.SearchScreenPage;
+import pages.SettingsScreenPage;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
@@ -17,6 +19,8 @@ import static com.codeborne.selenide.Selenide.open;
 public class TestBase {
 
     SearchScreenPage searchScreenPage = new SearchScreenPage();
+    SettingsScreenPage settingsScreenPage = new SettingsScreenPage();
+    LanguagesScreenPage languagesScreenPage = new LanguagesScreenPage();
 
     @BeforeAll
     static void beforeAll() {

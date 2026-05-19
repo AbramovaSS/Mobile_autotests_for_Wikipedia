@@ -8,37 +8,42 @@ public class MobileWikipediaTests extends TestBase {
 
     @DisplayName("Поиск по валидному запросу и отображение списка результатов")
     @Test
-    void successfulSearchTest() {
+    void successfulSearch() {
         searchScreenPage.skipStartScreen()
                 .searchInput()
                 .setKeyInput("Appium")
                 .verifySearchResultsAreDisplayed();
     }
 
-    @DisplayName("Добавление языка поиска")
+    @DisplayName("Переход на экран результата")
     @Test
-    void successfulAddLanguageTest() {
+    void successfulGoToResultScreen() {
         searchScreenPage.skipStartScreen()
                 .searchInput()
-                .tapLangSearchButton()
-                .tapAddLanguage()
-                .tapLanguageElement()
-                .verifyLanguageDisplayed();
+                .setKeyInput("Appium")
+                .tapFirstSearchResult()
+                .verifyTitleSearchResult();
     }
 
-    @DisplayName("Удаление языка")
+    @DisplayName("Удаление запроса в строке поиска")
     @Test
-    void successfulDeletionLanguageTest() {
+    void deletingQuerySearch() {
         searchScreenPage.skipStartScreen()
                 .searchInput()
-                .tapLangSearchButton()
+                .setKeyInput("Appium")
+                .tapSearchCloseBtn()
+                .verifySearchSrcText();
+    }
+
+    @DisplayName("Добавление языка")
+    @Test
+    void successfulAddingLanguage() {
+        settingsScreenPage.tapNavTabMore()
+                .tapSettings()
+                .tapWikiLanguages();
+        languagesScreenPage.tapAddLanguagePlus()
                 .tapAddLanguage()
-                .tapLanguageElement()
-                .tapKebabMenu()
-                .removeLanguage()
-                .languageCheckbox()
-                .deleteSelectedItems()
-                .deleteOk()
-                .verifyOneResult();
+                .verifyAddedLanguage();
+
     }
 }
