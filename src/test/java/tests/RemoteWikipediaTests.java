@@ -1,7 +1,7 @@
 package tests;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
+
 import org.junit.jupiter.api.Test;
 import pages.MainScreenPage;
 import pages.SearchScreenPage;
@@ -16,7 +16,7 @@ public class RemoteWikipediaTests extends TestBase {
     SettingsScreenPage settingsScreenPage = new SettingsScreenPage();
     MainScreenPage mainScreenPage = new MainScreenPage();
 
-    @Tag("remote")
+
     @DisplayName("Поиск по валидному запросу и отображение списка результатов")
     @Test
     void successfulSearch() {
@@ -26,7 +26,7 @@ public class RemoteWikipediaTests extends TestBase {
                 .verifySearchResultsAreDisplayed();
     }
 
-    @Tag("remote")
+
     @DisplayName("Удаление запроса в строке поиска")
     @Test
     void deletingQuerySearch() {
@@ -37,7 +37,7 @@ public class RemoteWikipediaTests extends TestBase {
                 .verifySearchSrcText();
     }
 
-    @Tag("remote")
+
     @DisplayName("Переход в настройки Wiki")
     @Test
     void goToSettingsScreen() {
@@ -47,7 +47,7 @@ public class RemoteWikipediaTests extends TestBase {
                 .checkScreenSetting();
     }
 
-    @Tag("remote")
+
     @DisplayName("Переход на экран результата")
     @Test
     void successfulGoToResultScreen() {
