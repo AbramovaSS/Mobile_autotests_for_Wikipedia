@@ -3,21 +3,19 @@ package config;
 import org.aeonbits.owner.Config;
 
 @Config.Sources({"classpath:local.properties"})
-
 public interface LocalConfig extends Config {
     @Key("device")
     String getDeviceName();
 
-    @Key("platformVersion")
+    @Key("os_version")
     String getPlatformVersion();
 
     @Key("localServerUrl")
-    @DefaultValue("http://127.0.0.1:4723/wd/hub")
     String getServerUrl();
 
-    @Key("appPackage")
+    @Key("app_package")
     String getAppPackage();
 
-    @Key("appActivity")
+    @Key("app_activity")
     String getAppActivity();
 }
