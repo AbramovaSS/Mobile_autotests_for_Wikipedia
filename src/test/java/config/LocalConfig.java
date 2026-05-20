@@ -12,6 +12,7 @@ public interface LocalConfig extends Config {
     String getPlatformVersion();
 
     @Key("localServerUrl")
+    @DefaultValue("http://127.0.0.1:4723/wd/hub")
     String getServerUrl();
 
     @Key("appPackage")
