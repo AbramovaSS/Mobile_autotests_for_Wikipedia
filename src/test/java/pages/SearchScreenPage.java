@@ -6,20 +6,23 @@ import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selectors.byClassName;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.*;
+import static data.TestData.PLACEHOLDER;
+import static data.TestData.SEARCH_QUERY;
 import static io.appium.java_client.AppiumBy.accessibilityId;
 import static io.appium.java_client.AppiumBy.id;
 
 public class SearchScreenPage {
     private final SelenideElement searchInput = $(accessibilityId("Search Wikipedia")),
             keyInput = $(id("org.wikipedia.alpha:id/search_src_text")),
-            firstSearchResult = $(byXpath("//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]")),
             searchResultTitle = $(byXpath("(//android.widget.TextView[@text=\"Appium\"])[1]")),
             searchCloseBtn = $(id("org.wikipedia.alpha:id/search_close_btn")),
             searchSrcText = $(id("org.wikipedia.alpha:id/search_src_text"));
 
-    private final ElementsCollection searchResults = $$(id("org.wikipedia.alpha:id/page_list_item_title"));
+    private final ElementsCollection searchResults = $$(id("org.wikipedia.alpha:id/page_list_item_title")),
+            firstSearchResult = $$(byClassName("android.view.View"));
 
     @Step("Скрыть стартовый экран")
     public SearchScreenPage skipStartScreen() {
@@ -47,13 +50,13 @@ public class SearchScreenPage {
 
     @Step("Нажать на первый результат поиска в списке")
     public SearchScreenPage tapFirstSearchResult() {
-        firstSearchResult.click();
+        firstSearchResult.first().click();
         return this;
     }
 
     @Step("Проверить, что заголовок экрана соотвествует поисковому результату")
     public SearchScreenPage verifyTitleSearchResult() {
-        searchResultTitle.shouldHave(text("Appium"));
+        searchResultTitle.shouldHave(text(SEARCH_QUERY));
         return this;
     }
 
@@ -65,8 +68,9 @@ public class SearchScreenPage {
 
     @Step("Проверить, что в строке поиска отображается плейсхолдер")
     public SearchScreenPage verifySearchSrcText() {
-        searchSrcText.shouldHave(text("Search or ask anything"));
+        searchSrcText.shouldHave(text(PLACEHOLDER));
         return this;
     }
+
 }
 

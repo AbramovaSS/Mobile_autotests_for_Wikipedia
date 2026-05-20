@@ -4,27 +4,34 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import drivers.BrowserstackDriver;
+import drivers.LocalDriver;
+
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import pages.LanguagesScreenPage;
-import pages.SearchScreenPage;
-import pages.SettingsScreenPage;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
 
 public class TestBase {
 
-    SearchScreenPage searchScreenPage = new SearchScreenPage();
-    SettingsScreenPage settingsScreenPage = new SettingsScreenPage();
-    LanguagesScreenPage languagesScreenPage = new LanguagesScreenPage();
+    public static String deviceHost = System.getProperty("typeHost");
 
     @BeforeAll
     static void beforeAll() {
-        Configuration.browser = BrowserstackDriver.class.getName();
+        deviceHost = System.getProperty("typeHost", "local"); // default local
+
+        switch (deviceHost.toLowerCase()) {
+            case "remote":
+                Configuration.browser = BrowserstackDriver.class.getName();
+                break;
+            case "local":
+            default:
+                Configuration.browser = LocalDriver.class.getName();
+                break;
+        }
         Configuration.browserSize = null;
         Configuration.timeout = 30000;
     }
@@ -37,13 +44,21 @@ public class TestBase {
 
     @AfterEach
     void addAttachments() {
-        String sessionId = Selenide.sessionId().toString();
-        System.out.println(sessionId);
 
-//        Attach.screenshotAs("Last screenshot"); // todo fix
-        Attach.pageSource();
-        closeWebDriver();
+        if (deviceHost.equals("remote")) {
 
-        Attach.addVideo(sessionId);
+            Attach.pageSource();
+            String sessionId = Selenide.sessionId().toString();
+            closeWebDriver();
+
+            Attach.addVideo(sessionId);
+        }
+
+        if (deviceHost.equals("local")) {
+            Attach.screenshotAs("Last screenshot");
+            Attach.pageSource();
+            closeWebDriver();
+        }
+
     }
 }
